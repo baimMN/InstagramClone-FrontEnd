@@ -15,12 +15,12 @@ function TopProfile(){
   return(
     <View style={{flex: 1,flexDirection: 'row',alignItems:'center',margin: 10}}>
       <View>
-        <ImgWrap src={require('../image/bill.jpg')} type="new"/>
+        <ImgWrap src={require('../image/bill.jpg')} type="customBordered" size={80} mr={15}/>
       </View>
 
       <View style={{flex:1}}>
         <View style={{flex:1}}>
-          <View style={{flex:1,flexDirection: 'row'}}>
+          <View style={{flex:1,flexDirection: 'row',justifyContent:'space-around'}}>
 
             <View style={{flex:1,alignItems:'center'}}>
               <Text style={{fontWeight:'bold'}}>3</Text>
@@ -40,19 +40,8 @@ function TopProfile(){
           </View>
         </View>
 
-        <View style={{flexDirection: 'row',marginTop: 2}}>
-          <View style={{alignItems:'center',flex:6,borderWidth: 0.5,borderColor: 'grey',borderRadius: 5,padding:5,marginRight: 2,alignSelf:'center'}}>
-            <Text>asdasd</Text>
-          </View>
-
-          <View style={{alignItems:'center',flex:1,borderWidth: 0.5,borderColor: 'grey',borderRadius: 5,padding:5,marginRight: 2,alignSelf:'center'}}>
-            <Iconm name='person' size={25}/>
-          </View>
-
-          <View style={{alignItems:'center',flex:1,borderWidth: 0.5,borderColor: 'grey',borderRadius: 5,padding:5,marginRight: 2,alignSelf:'center'}}>
-            <Iconi name='md-arrow-dropdown' size={25}/>
-          </View>
-
+        <View style={{marginTop: 2,alignItems:'center',width: '97%',borderWidth: 0.5,borderColor: 'grey',borderRadius: 5,padding:5,alignSelf:'center'}}>
+          <Text>Edit Profil</Text>
         </View>
       </View>
 

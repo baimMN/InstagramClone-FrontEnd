@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import {View,Text} from 'react-native'
+import {View,Text,Button} from 'react-native'
+import {Navigation} from 'react-native-navigation'
+import Iconn from 'react-native-vector-icons/Entypo'
 
 class Tes extends Component {
-
-    constructor(props) {
-        super(props);
+    tee=()=>{
+        Navigation.push(this.props.componentId,{
+            component:{
+                name:'tesss'   
+            }
+        })
     }
 
     render() {
-        return (
-            <View><Text>ini satu</Text></View>
-        );
+        return (<Iconn name='dots-three-horizontal' size={27} />)
     }
 }
 
-export default Tesss;
+export default Tes;
 
 
 

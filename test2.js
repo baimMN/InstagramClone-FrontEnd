@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import {View,Text} from 'react-native'
-
+import {Navigation} from 'react-native-navigation'
 class Tess extends Component {
 
     constructor(props) {
@@ -9,7 +9,7 @@ class Tess extends Component {
 
     render() {
         return (
-            <View><Text>nini dua </Text></View>
+            <View ><Text>ini propfileasd </Text></View>
         );
     }
 }

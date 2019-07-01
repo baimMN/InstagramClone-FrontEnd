@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import {View,Text} from 'react-native'
+import {Navigation} from 'react-native-navigation'
 
 class Tesss extends Component {
-    constructor(props) {
-        super(props);
+    yy=()=>{
+    	console.log("asds")
     }
-
     render() {
         return (
-            <View><Text>ni tigaa</Text></View>
+            <View style={{marginTop: 100}}>
+            	<Text onPress={this.yy}>ni tigaadasdaa</Text>
+            	<Text onPress={this.yy}>popppppp</Text>
+            </View>
         );
     }
 }

@@ -1,0 +1,4 @@
+##### React Native Navigation ######
+
+@@@@@@ STRUKTUR @@@@@@
+1.jika mau bottomTabs,isinya ada pertama dibugbkus children,isi children nya :comp->opt->bottomTab. 

@@ -11,25 +11,31 @@ import ApolloClient from 'apollo-boost'
 import {ApolloProvider} from 'react-apollo'
 import EditMenu from './src/component/editMenu.js'
 import Profile from './src/component/profile.js'
+import withProvider from './src/component/withProvider'
 import Home from './src/component/home.js'
 import Crud from './src/component/crud.js'
+import Mutation from './src/graphQL/mutations'
+import Query from './src/graphQL/query'
 import AddPost from './src/component/addPost.js'
+import SideMenu from './src/component/sideMenu.js'
 client= new ApolloClient({
-	uri:'http:// 192.168.1.111:3000/graphql'
+	uri:'http://192.168.0.13:3000/graphql'
 })
 
-Navigation.registerComponent(`login`, () => Login);
-Navigation.registerComponent(`app`, () => App);
-Navigation.registerComponent(`home`, () => Home);
-Navigation.registerComponent(`tes`, () => Tes);
-Navigation.registerComponent(`tess`, () => Tess);
-Navigation.registerComponent(`tesss`, () => Tesss);
-Navigation.registerComponent(`addPost`, () => AddPost);
-Navigation.registerComponent(`ApolloProvider`, () => ApolloProvider);
-Navigation.registerComponent(`crud`, () => Crud);
-Navigation.registerComponent(`edit`,()=> Edit);
-Navigation.registerComponent(`profile`, () => Profile);
-Navigation.registerComponent(`editMenu`, () => EditMenu);
+Navigation.registerComponent(`login`, () => withProvider(Login));
+Navigation.registerComponent(`app`, () => withProvider(App));
+Navigation.registerComponent(`home`, () => withProvider(Home));
+Navigation.registerComponent(`tes`, () => withProvider(Tes));
+Navigation.registerComponent(`sideMenu`, () => withProvider(SideMenu));
+Navigation.registerComponent(`tess`, () => withProvider(Tess));
+Navigation.registerComponent(`query`, () => withProvider(Query));
+Navigation.registerComponent(`mutation`, () => withProvider(Mutation));
+Navigation.registerComponent(`tesss`, () => withProvider(Tesss));
+Navigation.registerComponent(`addPost`, () => withProvider(AddPost));
+Navigation.registerComponent(`crud`, () => withProvider(Crud));
+Navigation.registerComponent(`edit`,() => withProvider(Edit));
+Navigation.registerComponent(`profile`, () => withProvider(Profile));
+Navigation.registerComponent(`editMenu`, () => withProvider(EditMenu));
 
 Navigation.events().registerAppLaunchedListener(() => {
 	Navigation.setRoot({

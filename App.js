@@ -13,16 +13,12 @@ class App extends Component {
   store= createStore(rootReducer)
 
   client= new ApolloClient({
-  	uri:'http://192.168.0.11:3000/graphql'
+  	uri:'http://192.168.1.108:3000/graphql'
   })
 
   render() {
     return (
-    	<ApolloProvider client={this.client}>
-	      <Provider store={this.store}>
-	        <Main/>
-	      </Provider>
-	    </ApolloProvider>
+      <Main/>
     );
   }
 } 

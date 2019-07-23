@@ -24,7 +24,7 @@ function ImgWrap(props){
 
 	if(type === "new")
 	{ return (
-		<View  style={{width: 70,marginRight:10,padding:1.5,height: 70,borderColor: 'red',borderWidth: 1,borderRadius: 40}}>
+		<View  style={{width: 70,marginRight:10,padding:2,height: 70,borderColor: 'red',borderWidth: 1,borderRadius: 40}}>
         	<View style={{width: '100%',height: '100%',borderRadius: 40,overflow: 'hidden'}} onPress={()=> {alert('adasdasda')}}>
 				<Image source={props.src} style={{width: '110%',height: '110%',zIndex: -1}} />
 			</View>
@@ -47,7 +47,7 @@ function ImgWrap(props){
 	
 	else if(type === "customBordered"){
 		return (
-			<View style={{width,marginRight,padding:1.5,height: width,borderColor,borderWidth: 1,borderRadius: 40}}>
+			<View style={{width,marginRight,padding:1.7,height: width,borderColor,borderWidth:1,borderRadius: 40}}>
 	          <Comp />
 			  {plusLogo && <Plus/>}
 	        </View>	
@@ -64,7 +64,7 @@ function ImgWrap(props){
 	}
 
 	else{return (
-		<View style={{marginRight:10,marginTop: 4.5,width: 67,height: 67}}>
+		<View style={{marginRight:10,marginTop: 4.5,width: 65,height: 65}}>
         	<Comp />
         	<Plus/>	
         </View>

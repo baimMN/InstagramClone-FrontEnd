@@ -2,7 +2,8 @@
 import React, {Component} from 'react';
 import ImgWrap from './imgwrap.js'
 import { Navigation } from 'react-native-navigation'
-import { View,Image,ScrollView,FlatList,TouchableHighlight,TextInput,AsyncStorage} from 'react-native';
+import { View,Image,ScrollView,FlatList,TouchableHighlight,TextInput} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage'
 import {Grid, Col, Row} from 'react-native-easy-grid'
 import { Container,Text,Content,Header,Left, Body,Right,Footer} from 'native-base'
 import {styles} from '../style.js'
@@ -14,8 +15,9 @@ import Iconf from 'react-native-vector-icons/Feather'
 import axios from 'axios'
 import HomeData from './homedata.js'
 import Iconm from 'react-native-vector-icons/MaterialIcons'
-import {graphql} from 'react-apollo'
+import {graphql,compose,Query} from 'react-apollo'
 import {gql} from 'apollo-boost'
+import * as query from '../graphQL/mutations'
 import {connect} from 'react-redux'
 import rootReducer from '../reducer/rootreducer.js'
 
@@ -30,10 +32,9 @@ import rootReducer from '../reducer/rootreducer.js'
 //     Navigation.pop('Component5')
 //   }
 // });
-
-const getPost=gql`
+const POST_DATA=gql`
   {
-    allPost{
+    allPost {
       _id
       ownerId
       owner{
@@ -48,41 +49,47 @@ const getPost=gql`
     }
   }
 `
-
+const USERS=gql`
+  {
+    users {
+      _id
+      name
+      picture
+      email
+    }
+  }
+`
 class Home extends Component {
-  state={
-    loading:true,
-    data:null,
-    postData:[],
-    usersData:[]
-  }
-
-  fetchAll=async()=> {
-    this.setState({loading:true})
-    await axios.get('http://192.168.0.11:3000/v1/users')
-    .then((res) => {
-      this.setState({usersData:res.data,loading:false})
-    })
-    .catch(err => alert(err))
-
-    this.setState({postData:this.props.data.allPost})
-  }
-
-  async componentDidMount(){
-    this.fetchAll()
-  }
-
-  componentDidUpdate(prevProps){
-    if(this.props.data.allPost){
-      this.setState({postData:this.props.data.allPost})
+  constructor(){
+    super()
+    this.state={
+      loading:false,
+      data:null,
+      postData:[],
+      usersData:[]
     }
   }
 
+  // fetchAll=async()=> {
+  //   this.setState({loading:true})
+  //   axios.get('http://192.168.1.108:3000/v1/users')
+  //   .then((res) => {
+  //     this.setState({usersData:res.data,loading:false})
+  //   })
+  //   .catch(err => alert(err))
+
+  //   this.setState({postData:this.props.data.allPost})
+  // }
+
+  // componentDidMount(){
+  //   // this.fetchAll()
+  // }
+
   render() {
-    console.log('test gasga',this.state.postData)
-    if(!this.state.loading && !this.props.data.loading){ 
+    console.log('inin render home aja')
+    if(!this.state.loading){ 
       return (
-        <React.Fragment>
+        <Container>
           <Header style={styles.header} >
             <Left style={{flex: 2,flexDirection: 'row',alignItems:'center'}}>
               <Icons name='camerao' size={30} />
@@ -104,21 +111,66 @@ class Home extends Component {
                 </TouchableHighlight>
                 <Text style={{alignSelf:'center',fontSize:11,marginLeft: -10,marginTop: 2}}>Eldn</Text>
               </View>
-              { this.state.usersData.map((data,index) => ( 
-                  <View key={index}>
-                    <TouchableHighlight>
-                      <ImgWrap type='new' src={require('../image/elon.jpg')} />
-                    </TouchableHighlight>
-                    <Text style={{alignSelf:'center',fontSize:11,marginLeft: -10,marginTop: 2}}>Eldn</Text>
-                  </View> 
-              ))}
+
+              <Query
+                query={USERS}
+                notifyOnNetworkStatusChange
+              >
+                {
+                  ({loading, error, data, refetch, networkStatus}) => {
+                    if(networkStatus === 7){
+                      return (
+                        data.users.map((datsa,index) => ( 
+                          <View key={index}>
+                            <TouchableHighlight>
+                              <ImgWrap type='new' src={require('../image/elon.jpg')} />
+                            </TouchableHighlight>
+                            <Text style={{alignSelf:'center',fontSize:11,marginLeft: -10,marginTop: 2}}>Eldn</Text>
+                          </View> 
+                        ))
+                      )
+                    }if(networkStatus === 1){
+                      return (
+                        [1,2,3,4,5].map((datsa,index) => ( 
+                          <View key={index}>
+                            <TouchableHighlight>
+                              <ImgWrap type='new' src={require('../image/bill.jpg')} />
+                            </TouchableHighlight>
+                            <Text style={{alignSelf:'center',fontSize:11,marginLeft: -10,marginTop: 2}}>Eldn</Text>
+                          </View> 
+                        ))
+                      )
+                    }else {
+                      return (<Text>Ada kesalahan</Text>)
+                    }
+                  }
+                }
+              </Query>
             </ScrollView>
             
-            <View style={{flex:1,}}>
-              <FlatList keyExtractor={(item,index) => item.id} data={this.state.postData} renderItem={ ({item}) => <HomeData item={item}/> } />
+            <View style={{flex:1}}>
+              <Query
+                query={POST_DATA}
+                notifyOnNetworkStatusChange
+              > 
+                {
+                  ({ loading, error, data, refetch, networkStatus}) => {
+                    if(networkStatus === 1) {
+                      return (<Text>Loading..</Text>)
+                    }
+
+                    if(networkStatus === 7) {
+                      console.log(data)
+                      return (
+                        <FlatList style={{marginBottom:80}} data={data.allPost} renderItem={ ({item}) => <HomeData item={item}/> } />
+                      )
+                    }
+                  }
+                }
+              </Query>
             </View>
           </Content>
-        </React.Fragment>
+        </Container>
       );
     }
     else {
@@ -129,5 +181,10 @@ class Home extends Component {
   }
 } 
 
-export default graphql(getPost)(Home)
-
+// export default compose(
+//   graphql(getPost,{name:"getPost"}),
+//   graphql(users,{name:"users"})
+// )(Home)
+export default Home
+// export dafault graphql(getPost)(Home)
+// export default graphql(getPost)(Home)

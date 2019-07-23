@@ -1,6 +1,7 @@
 
 import React, {Component,useState,useEffect} from 'react';
 import { View,Image,ScrollView} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage'
 import {Grid, Col, Row} from 'react-native-easy-grid'
 import { Container,Text,Content,Header, Left, Body,Right,Footer,Tab,Tabs,TabHeading, Button } from 'native-base'
 import Icons from 'react-native-vector-icons/AntDesign'
@@ -26,9 +27,14 @@ export default function Profile() {
   },[])
 
   const swipeMenu=(type)=> {
-    type === 'true' ?  setSideMenu(true) : setSideMenu(false)
+    Navigation.mergeOptions('sideMenu',{
+      sideMenu:{
+        right:{
+          visible:true
+        }
+      }
+    })
   }
-
 
   const logOut=()=> {
     swipeMenu('asd')
@@ -41,6 +47,15 @@ export default function Profile() {
     })
   }
 
+  const cekStorage=async ()=> {
+
+    return (
+      <View>
+        <Text>asd</Text>
+        <Text>asd</Text>
+      </View>
+    )
+  }
     {if(load){
     return ( 
     <React.Fragment>
@@ -58,7 +73,7 @@ export default function Profile() {
         </Left>
         <Right style={{flex: 3,flexDirection: 'row'}}>
           <Icons name='clockcircleo' size={27} style={{marginRight: 10}} />
-          <Iconsi name='menu' size={27} onPress={() => swipeMenu('true')} /> 
+          <Iconsi name='menu' size={27} onPress={() => swipeMenu()} /> 
         </Right>
       </Header>
       <Content>
@@ -105,6 +120,7 @@ export default function Profile() {
                   </TabHeading>}
                 >
                   <Text>adasd</Text>
+                  {cekStorage()}
                 </Tab>
                 <Tab heading={
                   <TabHeading style={{backgroundColor: '#f9f9f9'}}>
